@@ -1,11 +1,15 @@
-#include <iostream>
+#include <bits/stdc++.h>
 using namespace std;
+#define endl '\n'
+typedef long long int ll;
+void solve() {}
 int main() {
-    int i = 0;
-    if (!i)
-        cout << "Yes" << endl;
-    for (int j = 0; j < 10; j++) {
-        cout << j * j << endl;
+    ios::sync_with_stdio(false);
+    cin.tie(0);
+    int _n;
+    cin >> _n;
+    while (_n--) {
+        solve();
     }
-    cout << "hi" << endl;
+    return 0;
 }
