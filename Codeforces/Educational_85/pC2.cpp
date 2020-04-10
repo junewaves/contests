@@ -1,47 +1,34 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define endl '\n'
-typedef long long int ll;
-ll n, monster[300000][2];
-double r[300000];
+typedef long long ll;
+ll n;
 void solve() {
     cin >> n;
-    memset(monster, 0, sizeof(monster));
-    double rmax = 0.0;
-    ll pmax = 0;
-    int ii1 = 0, ii2 = 0;
-    for (int i = 0; i < n; i++) {
-        cin >> monster[i][0] >> monster[i][1];
-        r[i] = (double)monster[i][1] / (double)monster[i][0];
-        if (r[i] > rmax) {
-            rmax = r[i];
-            ii1 = i;
-        }
+    // min of additional bullets needed to initate explosion from some monster
+    ll min_to_init = LONG_LONG_MAX;
+    // sum for every monster
+    // the bullets needed to kill it after taking explosion damage
+    ll cnt = 0;
+    // only need to storage 3 monster's info at a time at most:
+    // only storing monster: m[0] = m(0), m[1] = m(i-1), m[2] = m(i)
+    ll m[4][2];
+    cin >> m[0][0] >> m[0][1];  // store monster 0's info
+    m[1][0] = m[0][0];
+    m[1][1] = m[0][1];
+    for (int i = 1; i < n; i++) {
+        cin >> m[2][0] >> m[2][1];
         if (i > 0) {
-            ll p = monster[i][0] - monster[i - 1][1];
-            if (p > pmax) {
-                pmax = p;
-                ii2 = i;
-            }
+            cnt += max(0LL, m[2][0] - m[1][1]);
+            min_to_init = min({ min_to_init, m[2][0], m[1][1] });
         }
+        m[1][0] = m[2][0];
+        m[1][1] = m[2][1];
     }
-    ll p = monster[0][0] - monster[n - 1][1];
-    if (p > pmax) {
-        pmax = p;
-        ii2 = 0;
-    }
-    ll min_b = LONG_LONG_MAX;
-    for (int ii : { ii1, ii2 }) {
-        ll bullets_used = monster[ii][0], dmg = monster[ii][1];
-        for (int j = (ii + 1) % n; j != ii; j = (j + 1) % n) {
-            if (dmg < monster[j][0]) {
-                bullets_used += monster[j][0] - dmg;
-            }
-            dmg = monster[j][1];
-        }
-        min_b = min(min_b, bullets_used);
-    }
-    cout << min_b << endl;
+    // calculate final monster (m[0])
+    cnt += max(0LL, m[0][0] - m[1][1]);
+    min_to_init = min({ min_to_init, m[0][0], m[1][1] });
+    cout << cnt + min_to_init << endl;
 }
 int main() {
     ios::sync_with_stdio(false);
