@@ -1,4 +1,4 @@
 # 2020 Spring NCKU ACM Training Courses
-* CourseName: Advanced Competitive Programming
-* OJ account: samchen
+* Course Name: Advanced Competitive Programming
 * Team: 18
+* My OJ username: samchen
