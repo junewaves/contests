@@ -4,7 +4,10 @@ using namespace std;
 typedef long long int ll;
 // Code Jam Round 1A
 int _n;
-void solve() {}
+void solve() {
+    static int i = 0;
+    cout << ++i << endl;
+}
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
