@@ -1,2 +1,4 @@
 .vscode
 bin
+*.ps1
+*.sh
