@@ -2,7 +2,7 @@
 using namespace std;
 #define endl '\n'
 typedef long long int ll;
-// Code Jam Round 1A
+// Code Jam Round 1A (4/11)
 int _n;
 void solve() {
     static int i = 0;
