@@ -1,12 +1,40 @@
+// Code Jam Round 1A (4/11)
 #include <bits/stdc++.h>
 using namespace std;
 #define endl '\n'
 typedef long long int ll;
-// Code Jam Round 1A (4/11)
-int _n;
+int _n, n;
 void solve() {
-    static int i = 0;
-    cout << ++i << endl;
+    cin >> n;
+    string s;
+    vector<vector<string>> vs;
+    for (int i = 0; i < n; i++) {
+        cin >> s;
+        vector<string> split;
+        int p = 0;
+        for (int j = 0; j < (int)s.size();) {
+            if (s[j] == '*') {
+                if (j > p)
+                    split.emplace_back(s.substr(p, j - p));
+                p = j;
+                while (s[j] == '*')
+                    j++;
+                split.emplace_back(s.substr(p, j - p));
+                p = j;
+            } else {
+                j++;
+            }
+        }
+        if (p < (int)s.size() && s[p] != '*')
+            split.emplace_back(s.substr(p, s.size() - p));
+        vs.emplace_back(split);
+    }
+    for (auto& a : vs) {
+        for (auto& b : a) {
+            cout << b << ", ";
+        }
+        cout << endl;
+    }
 }
 int main() {
     ios::sync_with_stdio(false);
