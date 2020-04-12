@@ -4,7 +4,21 @@ using namespace std;
 #define endl '\n'
 typedef long long int ll;
 void solve() {
-    cout << endl;
+    int n, n_max = INT_MIN, tmp, d_max = 0, t = 0;
+    cin >> n;
+    for (int i = 0; i < n; i++) {
+        cin >> tmp;
+        if (tmp > n_max) {
+            n_max = tmp;
+        }
+        int p = n_max - tmp;
+        d_max = max(p, d_max);
+    }
+    while (d_max > 0) {
+        d_max >>= 1;
+        t++;
+    }
+    cout << t << endl;
 }
 int main() {
     ios::sync_with_stdio(false);

@@ -4,7 +4,9 @@ using namespace std;
 #define endl '\n'
 typedef long long int ll;
 void solve() {
-    cout << endl;
+    int n = 0;
+    cin >> n;
+    cout << n << endl;
 }
 int main() {
     ios::sync_with_stdio(false);
