@@ -53,4 +53,5 @@ int main(int argc, char* argv[]) {
         }
         cout << endl;
     }
+    pow(1, 2);
 }
