@@ -9,7 +9,7 @@ IndentCaseLabels: false
 AlignConsecutiveAssignments: false
 AlignTrailingComments: false
 AllowShortBlocksOnASingleLine: false
-AllowShortLoopsOnASingleLine: true
+AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
 AllowShortIfStatementsOnASingleLine: false
 AlwaysBreakAfterReturnType: None
