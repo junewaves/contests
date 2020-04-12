@@ -8,7 +8,6 @@ vector<ll> v = { 1, 2, 3 };
 void solve() {
     ll n;
     cin >> n;
-    ll b = (n + 2) / 3 + 1;
     for (ll i = v[v.size() - 3]; (ll)v.size() < n; i++) {
         if (s.count(i))
             continue;
