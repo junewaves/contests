@@ -2,11 +2,11 @@
 #include <bits/stdc++.h>
 using namespace std;
 int main() {
+    ios::sync_with_stdio(false);
+    cin.tie(0);
     string s;
     int n, m, t;
-    while (getline(cin, s)) {
-        istringstream stream(s);
-        stream >> n >> m >> t;
+    while (cin >> n >> m >> t) {
         int N = max(0, (int)ceil(log2(t) - log2(n)) + 1);
         int M = max(0, (int)ceil(log2(t) - log2(m)) + 1);
         vector<vector<int>> S(M + N + 1, vector<int>(t + 1, 0));
@@ -22,7 +22,6 @@ int main() {
             P[C] = pow(2, i);
             C++;
         }
-
         for (int i = 0; i < C; i++) {
             for (int j = 0; j <= t; j++) {
                 S[i][j] = (j == 0 ? 0 : -1);
@@ -41,7 +40,7 @@ int main() {
                 cout << S[C - 1][i];
                 if (i < t)
                     cout << " " << t - i;
-                cout << endl;
+                cout << '\n';
                 break;
             }
         }
