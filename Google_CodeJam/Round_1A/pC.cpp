@@ -88,9 +88,11 @@ int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
     cin >> _n;
+    clock_t start = clock();
     for (int _cn = 1; _cn <= _n; _cn++) {
         cout << "Case #" << _cn << ": ";
         solve();
     }
-    return 0;
+    clock_t end = clock() - start;
+    cout << end << endl;
 }
