@@ -4,7 +4,24 @@ using namespace std;
 #define endl '\n'
 typedef long long int ll;
 void solve() {
-    int n;
+    int x, n, m;
+    cin >> x >> n >> m;
+    if (x <= 20) {
+        if (m * 10 >= x)
+            cout << "YES" << endl;
+        else
+            cout << "NO" << endl;
+        return;
+    }
+    n = min(n, 17);
+    while (n > 0) {
+        x = x / 2 + 10;
+        n--;
+    }
+    if (m * 10 >= x)
+        cout << "YES" << endl;
+    else
+        cout << "NO" << endl;
 }
 int main() {
     ios::sync_with_stdio(false);

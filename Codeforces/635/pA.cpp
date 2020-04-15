@@ -4,9 +4,12 @@ using namespace std;
 #define endl '\n'
 typedef long long int ll;
 void solve() {
-    int n = 0;
-    cin >> n;
-    cout << n << endl;
+    int a, b, c, d;
+    cin >> a >> b >> c >> d;
+    if (d < c + b)
+        cout << b << " " << c << " " << d << endl;
+    else
+        cout << b << " " << c << " " << b + c - 1 << endl;
 }
 int main() {
     ios::sync_with_stdio(false);
