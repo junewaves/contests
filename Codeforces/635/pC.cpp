@@ -4,12 +4,12 @@ using namespace std;
 #define endl '\n'
 typedef long long int ll;
 struct Node {
-    int parent, depth, c;
+    ll parent, depth, c;
 };
 int n, k, a, b;
 vector<vector<int>> edges;
 vector<Node> tree;
-int setNode(int p, int ni, int d) {
+ll setNode(int p, int ni, int d) {
     tree[ni].c = 1;
     tree[ni].depth = d;
     tree[ni].parent = p;
@@ -31,20 +31,14 @@ void solve() {
         edges[a - 1].push_back(b - 1);
     }
     setNode(-1, 0, 0);
-    vector<int> id(n);
-    for (int i = 0; i < n; i++)
-        id[i] = i;
-    sort(id.begin(), id.end(), [&](int x, int y) {
-        if (tree[x].depth - tree[x].c != tree[y].depth - tree[y].c)
-            return tree[x].depth - tree[x].c > tree[y].depth - tree[y].c;
-        else if (tree[x].depth != tree[y].depth)
-            return tree[x].depth > tree[y].depth;
-        else
-            return tree[x].c < tree[y].c;
-    });
-    int sum = 0;
+    vector<ll> inc(n);
+    for (int i = 0; i < n; i++) {
+        inc[i] = tree[i].depth - tree[i].c + 1;
+    }
+    sort(inc.begin(), inc.end(), greater<ll>());
+    ll sum = 0;
     for (int i = 0; i < k; i++) {
-        sum += tree[id[i]].depth - tree[id[i]].c + 1;
+        sum += inc[i];
     }
     cout << sum << endl;
 }
