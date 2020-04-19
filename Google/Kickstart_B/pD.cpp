@@ -12,29 +12,29 @@ void solve() {
         cout << 0 << endl;
         return;
     }
-    vector<vector<ll>> dp(H, vector<ll>(W, 0));
+    vector<vector<double>> dp(H, vector<double>(W, 0.0));
     ll fail = 0;
     auto is_hole = [&](int i, int j) {
         return i + 1 >= U && i < D && j + 1 >= L && j < R;
     };
-    for (int i = 0; i < H; i++)
-        dp[i][0] = 1;
-    for (int j = 0; j < W; j++)
-        dp[0][j] = 1;
-    for (int i = 1; i < H; i++) {
-        for (int j = 1; j < W; j++) {
-            ll u = dp[i - 1][j] + dp[i][j - 1];
-            // u += is_hole(i - 1, j) ? 0 : dp[i - 1][j];
-            // u += is_hole(i, j - 1) ? 0 : dp[i][j - 1];
-            if (is_hole(i, j))
-                fail += u;
-
-            dp[i][j] = u;
+    dp[0][0] = 1.0;
+    for (int i = 0; i < H; i++) {
+        for (int j = 0; j < W; j++) {
+            if (!is_hole(i, j)) {
+                if (i == H - 1 && j < W - 1)
+                    dp[i][j + 1] += dp[i][j];
+                else if (j == W - 1 && i < H - 1)
+                    dp[i + 1][j] += dp[i][j];
+                else if (!(i == H - 1 && j == W - 1)) {
+                    if (!is_hole(i + 1, j))
+                        dp[i + 1][j] += 0.5 * dp[i][j];
+                    if (!is_hole(i, j + 1))
+                        dp[i][j + 1] += 0.5 * dp[i][j];
+                }
+            }
         }
     }
-    double t = fail + dp[H - 1][W - 1];
-    double p = (double)fail / dp[H - 1][W - 1];
-    cout << fixed << setprecision(10) << 1 - p << endl;
+    cout << dp[H - 1][W - 1] << endl;
 }
 int main() {
     ios::sync_with_stdio(false);
