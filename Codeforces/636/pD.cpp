@@ -6,21 +6,23 @@ void solve() {
     int n, k;
     cin >> n >> k;
     vector<int> num(n);
-    vector<int> can(2 * k + 1, n);
+    vector<int> can(2 * k + 2, 0);
+    can[0] = n;
     for (int i = 0; i < n; i++)
         cin >> num[i];
     for (int i = 0; i < n / 2; i++) {
-        int a = max(num[i], num[n - i - 1]);
-        int b = min(num[i], num[n - i - 1]);
-        for (int j = b + 1; j <= k + a; j++)
-            can[j] -= ((j == a + b) ? 2 : 1);
+        int a = min(num[i], num[n - i - 1]);
+        int b = max(num[i], num[n - i - 1]);
+        can[1 + a]--;
+        can[a + b]--;
+        can[a + b + 1]++;
+        can[b + k + 1]++;
     }
-    for (int i : can)
-        cout << i << " ";
-    cout << endl;
-    int ans = n;
-    for (int m : can)
-        ans = min(ans, m);
+    int ans = n, curr = 0;
+    for (int m : can) {
+        curr += m;
+        ans = min(ans, curr);
+    }
     cout << ans << endl;
 }
 int main() {
