@@ -19,6 +19,10 @@ inline int getGroupSize(int v) {
 int main() {
     int n, k;
     cin >> n >> k;
+    if (k == 1) {
+        cout << 0 << endl;
+        exit(0);
+    }
     vector<pair<int, int>> a;  // value, index
     groupSize.assign(n, 0);
     a.reserve(n);
