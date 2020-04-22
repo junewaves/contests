@@ -21,7 +21,7 @@ int main() {
         s += m[i];
         dp[i] = s;
     }
-    s = 0;
+    s = dp[k - 2];
     for (int i = k - 1; i < n; i++) {
         ll ps = 0, p = 0;
         for (int j = i; j > i - k + 1; j--) {
@@ -29,9 +29,7 @@ int main() {
             p = max(p, ps + (j > 1 ? dp[j - 2] : 0));
         }
         dp[i] = p;
-        // s = max(s, dp[i]);
+        s = max(s, dp[i]);
     }
-    for (ll a : dp)
-        s = max(s, a);
     cout << s << endl;
 }
