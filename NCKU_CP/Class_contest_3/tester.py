@@ -1,25 +1,36 @@
 from random import randint
-import subprocess
+from subprocess import PIPE, run
+import sys
 
-maxn = 10
-maxa = 10
-c = 0
-while True:
-    # create random input
-    print(c)
-    c += 1
+
+def create_input() -> str:
+    maxn = 10
+    maxa = 10
     n = randint(1, maxn)
     k = randint(1, n)
     s = str(n) + ' ' + str(k) + '\n'
-    for i in range(n):
+    for _ in range(n):
         a = randint(1, maxa)
         s += str(a) + ' '
     s += '\n'
-    res = subprocess.run(args=['bin/p37_fix.exe'], input=s, text=True, capture_output=True)
-    res2 = subprocess.run(args=['bin/p39_test.exe'], input=s, text=True, capture_output=True)
-    if res.stdout != res2.stdout:
+    return s
+
+
+__c: int = 0
+while True:
+    # create random input
+    print(__c)
+    __c += 1
+    s = create_input()
+    r1 = run(args=[sys.argv[1]],
+             encoding='utf-8', input=s, stdout=PIPE).stdout
+    r2 = run(args=[sys.argv[2]],
+             encoding='utf-8', input=s, stdout=PIPE).stdout
+    if r1 != r2:
         print('input:')
         print(s, end='')
-        print('answer of dp: ' + res.stdout, end='')
-        print('answer of greedy: ' + res2.stdout, end='')
+        a = sys.argv[1].split('/')[-1]
+        b = sys.argv[2].split('/')[-1]
+        print(f'answer of {a}: ' + r1, end='')
+        print(f'answer of {b}: ' + r2, end='')
         exit()
