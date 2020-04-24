@@ -17,7 +17,7 @@ def create_input() -> str:
 
 
 def input_p36() -> str:
-    maxn = 10
+    maxn = 8
     N = randint(2, maxn)
     s = str(N) + '\n'
     for _ in range(N):
@@ -30,20 +30,23 @@ def input_p36() -> str:
 __c: int = 0
 while True:
     # create random input
-    print(__c)
+    # print(__c)
     __c += 1
     s = input_p36()
     r1 = run(args=[sys.argv[1]],
              encoding='utf-8', input=s, stdout=PIPE).stdout
     r2 = run(args=[sys.argv[2]],
              encoding='utf-8', input=s, stdout=PIPE).stdout
-    if r1 != r2:
+    r3 = run(args=[sys.argv[3]],
+             encoding='utf-8', input=s, stdout=PIPE).stdout
+    if r1 != r3 and r2 != r3:
+        print('Failed: test no.', __c, sep='')
         print('input:')
         print(s, end='')
         a = sys.argv[1].split('/')[-1]
         b = sys.argv[2].split('/')[-1]
+        c = sys.argv[3].split('/')[-1]
         print(f'answer of {a}: ' + r1, end='')
         print(f'answer of {b}: ' + r2, end='')
+        print(f'answer of {c}: ' + r3, end='')
         exit()
-    else:
-        print('success', end='')

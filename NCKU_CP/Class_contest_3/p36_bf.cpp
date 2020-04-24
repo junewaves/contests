@@ -1,8 +1,8 @@
 #include <bits/stdc++.h>
 using namespace std;
 #define ll long long
-ll pairSum(pair<int, ll>& p) {
-    return (ll)p.first + p.second;
+ll pairSum(pair<ll, ll>& p) {
+    return p.first + p.second;
 }
 int main() {
     int n;
@@ -23,19 +23,19 @@ int main() {
         int t;
         scanf("%d", &s[i]);
     }
-    vector<vector<pair<int, ll>>> dp;  // value, steps
-    dp.emplace_back(vector<pair<int, ll>>());
+    vector<vector<pair<ll, ll>>> dp;  // value, steps
+    dp.emplace_back(vector<pair<ll, ll>>());
     for (int i = 0; i < n; i++) {
-        dp[0].emplace_back(s[i], 0);
+        dp[0].emplace_back((ll)s[i], 0);
     }
-    dp.emplace_back(vector<pair<int, ll>>());
+    dp.emplace_back(vector<pair<ll, ll>>());
     for (int i = 0; i + 1 < n; i++) {
         ll t = s[i] + s[i + 1];
         dp[1].emplace_back(t, t);
     }
     int x = 2;
     while (1) {
-        dp.emplace_back(vector<pair<int, ll>>());
+        dp.emplace_back(vector<pair<ll, ll>>());
         for (int y = 0; y < n - x; y++) {
             ll best = LONG_LONG_MAX;
             for (int i = 0; i < x; i++) {
@@ -48,5 +48,13 @@ int main() {
             break;
         x++;
     }
+#ifdef _LOCAL_DEBUG
+    for (int i = 0; i < x; i++) {
+        for (auto& p : dp[i]) {
+            printf("(%d, %d) ", p.first, p.second);
+        }
+        puts("");
+    }
+#endif
     printf("%lld\n", dp[x][0].second);
 }
