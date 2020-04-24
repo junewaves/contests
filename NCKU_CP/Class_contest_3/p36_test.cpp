@@ -32,7 +32,7 @@ int main() {
     ps.reserve(n);
     for (int i = 0; i < n; i++) {
         int y = 1;
-        // scanf("%d", &y);
+        scanf("%d", &y);
         sum += y;
         s.push_back(y);
         ps.push_back(sum);

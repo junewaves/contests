@@ -21,7 +21,7 @@ int main() {
         s += m[i];
         dp[i] = s;
     }
-    s = dp[k - 2 > 0 ? k - 2 : 0];
+    s = dp[k > 1 ? k - 2 : 0];
     for (int i = k - 1; i < n; i++) {
         ll ps = 0, p = 0;
         for (int j = i; j > i - k + 1; j--) {

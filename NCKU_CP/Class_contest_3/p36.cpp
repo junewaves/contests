@@ -9,13 +9,13 @@ int main() {
     cin.tie(0);
     int n;
     cin >> n;
-    list<ll> m(n, 1);
-    /*
+    list<ll> m;
+
     for (int i = 0; i < n; i++) {
         int t;
         cin >> t;
         m.push_back(t);
-    }*/
+    }
     ll a, b, s, sum = 0;
     while (m.size() > 1) {
         auto it = m.begin(), it2 = it;

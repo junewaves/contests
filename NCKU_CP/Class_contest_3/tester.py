@@ -14,19 +14,23 @@ def create_input() -> str:
         s += str(a) + ' '
     s += '\n'
     return s
+
+
 def input_p36() -> str:
     maxn = 10
-    n = randint(1, maxn)
-    s = str(n) + '\n'
-    for _ in range(n):
-        s += '1 '
+    N = randint(2, maxn)
+    s = str(N) + '\n'
+    for _ in range(N):
+        v = randint(1, 10)
+        s += str(v) + ' '
     s += '\n'
+    return s
 
 
 __c: int = 0
 while True:
     # create random input
-    print(__c, end='\r')
+    print(__c)
     __c += 1
     s = input_p36()
     r1 = run(args=[sys.argv[1]],
