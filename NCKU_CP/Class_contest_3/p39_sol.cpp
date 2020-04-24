@@ -10,33 +10,30 @@ int main() {
         puts("0");
         return 0;
     }
-    vector<ll> sum(n);
-    vector<ll> dp(n);
+    ll sum_i, dp_i;
+    cin >> dp_i;
+    sum_i = dp_i;
     deque<pair<ll, int>> q;
-    cin >> tmp;
-    sum[0] = tmp;
-    dp[0] = tmp;
-    q.emplace_back(sum[0], 0);
+    q.emplace_back(dp_i, 0);
     for (int i = 1; i < k - 1; i++) {
         cin >> tmp;
-        sum[i] = sum[i - 1] + tmp;
-        dp[i] = sum[i];
-        ll s = sum[i] - dp[i - 1];
+        sum_i += tmp;
+        ll s = sum_i - dp_i;
         while (!q.empty() && s < q.back().first)
             q.pop_back();
         q.emplace_back(s, i);
+        dp_i = sum_i;
     }
-    q.emplace_back(dp[k - 2], k - 2);
     for (int i = k - 1; i < n; i++) {
         cin >> tmp;
-        sum[i] = sum[i - 1] + tmp;
-        ll s = sum[i] - dp[i - 1];
+        sum_i += tmp;
+        ll s = sum_i - dp_i;
         while (!q.empty() && s < q.back().first)
             q.pop_back();
         q.emplace_back(s, i);
-        dp[i] = sum[i] - q.front().first;
+        dp_i = sum_i - q.front().first;
         if (q.front().second == i - k + 1)
             q.pop_front();
     }
-    cout << dp[n - 1] << '\n';
+    cout << dp_i << '\n';
 }
