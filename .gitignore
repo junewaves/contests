@@ -3,3 +3,4 @@ bin
 *.ps1
 *.sh
 *.swp
+*.exe
