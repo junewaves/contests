@@ -2,7 +2,7 @@
 using namespace std;
 
 int main() {
-    int n, m, best = 0;
+    int n, m, best_monster = 0;
     vector<int> monsters;
     vector<pair<int, int>> players;
     cin >> n;
@@ -10,32 +10,29 @@ int main() {
         int tmp;
         cin >> tmp;
         monsters.push_back(tmp);
-        best = max(best, tmp);
+        best_monster = max(best_monster, tmp);
     }
     cin >> m;
-    bool possible = false;
     for (int i = 0; i < m; i++) {
         int p, s;
         cin >> p >> s;
-        if (p > best)
-            possible = true;
         players.emplace_back(p, s);
     }
-    if (!possible) {
+    sort(players.begin(), players.end(), greater<pair<int, int>>());
+    if (best_monster > players[0].first) {
         cout << -1 << endl;
         exit(0);
     }
-    int a = 0, days = 0;
-    while (a < n) {
+    int days = 0, killed = 0;
+    while (killed < n) {
         int max_kill = 0;
         for (int i = 0; i < m; i++) {
-            int j = a, s = players[i].second;
-            while (s && j < n && players[i].first >= monsters[j]) {
+            int j = killed, s = players[i].second;
+            while (s > 0 && j < n && monsters[j] <= players[i].first)
                 j++, s--;
-            }
             max_kill = max(max_kill, j);
         }
-        a = max_kill;
+        killed = max_kill;
         days++;
     }
     cout << days << endl;
