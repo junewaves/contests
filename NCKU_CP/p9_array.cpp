@@ -1,10 +1,12 @@
 #include <bits/stdc++.h>
 using namespace std;
+// zero-indexed, [i, r)
 constexpr const int MAXN = 1e5;
 int mx[MAXN << 2];
 void update(int idx, int l, int r, int i, int v) {
     if (r - l == 1) {
         mx[idx] = v;
+        // sum: sum[idx] += d;
         return;
     }
     int m = (l + r) / 2, left = 2 * idx + 1, right = left + 1;
@@ -12,6 +14,7 @@ void update(int idx, int l, int r, int i, int v) {
         update(left, l, m, i, v);
     else
         update(right, m, r, i, v);
+    // sum: sum[idx] = sum[left] + sum[right]
     mx[idx] = max(mx[left], mx[right]);
 }
 int query(int idx, int l, int r, int ql, int qr) {
@@ -23,6 +26,7 @@ int query(int idx, int l, int r, int ql, int qr) {
     if (m <= ql)
         return query(right, m, r, ql, qr);
 
+    // sum: return query(left) + query(right)
     return max(query(left, l, m, ql, qr), query(right, m, r, ql, qr));
 }
 int main() {
