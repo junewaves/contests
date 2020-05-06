@@ -1,60 +1,27 @@
-#include <bits/stdc++.h>
-#ifndef _LOCAL_DEBUG
-#define endl '\n'
-#endif
-using namespace std;
-typedef long long ll;
 #include "lib0043.h"
-int a = 1, b = 2;  // a small, b big
-int cmp(int t, int i) {
-    if (t == 0) {
-        if (Collision(a, i)) {
-            a = i;
-            return 1;
-        } else if (Collision(i, b)) {
-            b = i;
-            return 2;
-        }
-    } else {
-        if (Collision(i, b)) {
-            b = i;
-            return 2;
-        } else if (Collision(a, i)) {
-            a = i;
-            return 1;
-        }
-    }
-    return 0;
-}
+int n, i, Min = 1, Max = 2;
 int main() {
-    int n;
-    srand(time(0));
     MagicBalls(&n);
-    // a=min, b=max
-    if (Collision(a, b)) {
-        int t = a;
-        a = b;
-        b = t;
-    }
-    int last = 0;
-    for (int i = 3; i < n; i += 2) {
+    if (Collision(Min, Max))
+        Max = 1, Min = 2;
+    for (i = 3; i < n; i += 2) {
         if (Collision(i, i + 1)) {
-            if (Collision(i, b))
-                b = i;
-            if (Collision(a, i + 1))
-                a = i + 1;
+            if (Collision(i, Max))
+                Max = i;
+            if (Collision(Min, i + 1))
+                Min = i + 1;
         } else {
-            if (Collision(i + 1, b))
-                b = i + 1;
-            if (Collision(a, i))
-                a = i;
+            if (Collision(i + 1, Max))
+                Max = i + 1;
+            if (Collision(Min, i))
+                Min = i;
         }
     }
-    if (n % 2 == 1) {
-        if (Collision(n, b))
-            b = n;
-        else if (Collision(a, n))
-            a = n;
+    if (i == n) {  // n is odd, need to compare n alone
+        if (Collision(n, Max))
+            Max = n;
+        else if (Collision(Min, n))
+            Min = n;
     }
-    Choose(a, b);
+    Choose(Min, Max);
 }
