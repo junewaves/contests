@@ -1,5 +1,5 @@
 #include <bits/stdc++.h>
-#ifdef _LOCAL_DEBUG
+#ifndef _LOCAL_DEBUG
 #define endl '\n'
 #endif
 using namespace std;
