@@ -9,11 +9,9 @@ int main() {
     if (n == m) {
         cout << "1\n";
         exit(0);
-    } else if (n == 1) {
-        cout << m << '\n';
-        exit(0);
-    } else if (m == 1) {
-        cout << n << '\n';
+    }
+    if (n == 1 || m == 1) {
+        cout << max(n, m) << '\n';
         exit(0);
     }
     for (int i = 1; i <= n; i++) {
@@ -23,16 +21,16 @@ int main() {
             else if (i == 1 || j == 1)
                 dp[i][j] = max(i, j);
             else {
-                int best = 1e9;
-                for (int x = 1; x <= i && j - x > 0; x++) {
-                    best = min(best, dp[i][x] + dp[i][j - x]);
+                dp[i][j] = 1e9;
+                for (int x = 1; x <= i && x < j; x++) {
+                    dp[i][j] = min(dp[i][j], dp[i][x] + dp[i][j - x]);
                 }
-                for (int y = 1; y <= j && i - y > 0; y++) {
-                    best = min(best, dp[y][j] + dp[i - y][j]);
+                for (int y = 1; y <= j && y < i; y++) {
+                    dp[i][j] = min(dp[i][j], dp[y][j] + dp[i - y][j]);
                 }
-                dp[i][j] = best;
             }
         }
     }
     cout << dp[n][m] << '\n';
+    return 0;
 }
