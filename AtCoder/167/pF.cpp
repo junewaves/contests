@@ -2,51 +2,42 @@
 using namespace std;
 #define endl '\n'
 typedef long long ll;
-int n;
-vector<string> s;
+bool check(const vector<pair<int, int>>& s) {
+    int h = 0;
+    for (const auto& p : s) {
+        if (h + p.first < 0)
+            return false;
+        h += p.second;
+    }
+    return true;
+}
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n, total = 0;
     cin >> n;
-    string tmp;
-    ll L = 0, R = 0, pl = 0, pr = 0;
+    vector<pair<int, int>> ls, rs;
     for (int i = 0; i < n; i++) {
-        ll l = 0, r = 0;
+        string tmp;
+        int l = 0, b = 0;
         cin >> tmp;
         for (const char& c : tmp) {
             if (c == '(')
                 l++;
-            else if (c == ')' && l > 0)
-                l--;
             else
-                r++;
+                l--;
+            b = min(b, l);
         }
-        if (l == 0 && r > 0)
-            R += r;
-        else if (l > 0 && r == 0)
-            L += l;
-        else if (l > 0 && r > 0) {
-            if (pl == 0 && pr == 0) {
-                pl = l, pr = r;
-            } else {
-                if (min(pl, r) > min(pr, l)) {
-                    if (pl >= r)
-                        pl = pl - r + l;
-                    else
-                        pr = pr + r - pl, pl = l;
-                } else {
-                    if (pr >= l)
-                        pr = pr - l + r;
-                    else {
-                        pl = pl + l - pr, pr = r;
-                    }
-                }
-            }
-        }
+        if (l > 0)
+            ls.emplace_back(b, l);
+        else
+            rs.emplace_back(b - l, -l);
+        total += l;
     }
-    if (L >= pr && R >= pl && L - pr == R - pl) {
-        cout << "Yes";
-    } else {
-        cout << "No";
-    }
+    sort(ls.rbegin(), ls.rend());
+    sort(rs.rbegin(), rs.rend());
+    if (check(ls) && check(rs) && total == 0)
+        cout << "Yes" << endl;
+    else
+        cout << "No" << endl;
 }
