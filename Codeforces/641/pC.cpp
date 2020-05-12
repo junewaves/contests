@@ -2,16 +2,54 @@
 using namespace std;
 #define endl '\n'
 typedef long long ll;
+const int mxN = 1e5 + 1;
+int n, a[mxN], pre[mxN], suf[mxN], b[mxN];
 void solve() {
-    ;
+    cin >> n;
+    for (int i = 0; i < n; i++)
+        cin >> a[i];
+    pre[0] = a[0];
+    for (int i = 1; i < n; i++) {
+        pre[i] = __gcd(pre[i - 1], a[i]);
+    }
+    /*
+    for (int i = 0; i < n; i++) {
+        cout << pre[i] << " ";
+    }
+    cout << endl;
+    */
+    suf[n - 1] = a[n - 1];
+    for (int i = n - 2; i >= 0; i--) {
+        suf[i] = __gcd(suf[i + 1], a[i]);
+    }
+    /*
+    for (int i = 0; i < n; i++) {
+        cout << suf[i] << " ";
+    }
+    cout << endl;
+    */
+    int mm = 1e8;
+    for (int i = 0; i < n; i++) {
+        if (i == 0)
+            b[i] = suf[i + 1];
+        else if (i == n - 1)
+            b[i] = pre[i - 1];
+        else {
+            b[i] = __gcd(pre[i - 1], suf[i + 1]);
+        }
+        // cout << b[i] << " ";
+        mm = min(mm, b[i]);
+    }
+    //    cout << endl;
+    int ans = mm;
+    for (int i = 0; i < n; i++) {
+        ans *= (b[i] / mm);
+    }
+    cout << ans << endl;
 }
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int _n;
-    cin >> _n;
-    while (_n--) {
-        solve();
-    }
+    solve();
     return 0;
 }
