@@ -11,7 +11,8 @@ void solve() {
     }
     unordered_map<int, int> dp;
     dp[0] = 1;
-    int sum = 0, ans = 0, smin = 0;
+    int sum = 0, smin = 0;
+    ll ans = 0;
     for (int i = 0; i < n; i++) {
         sum += a[i];
         smin = min(smin, sum);
