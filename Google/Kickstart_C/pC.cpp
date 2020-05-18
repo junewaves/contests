@@ -6,17 +6,18 @@ const int mxN = 1e5;
 int n, a[mxN];
 void solve() {
     cin >> n;
+    int sum = 0;
     for (int i = 0; i < n; i++) {
         cin >> a[i];
+        sum += abs(a[i]);
     }
-    unordered_map<int, int> dp;
-    dp[0] = 1;
-    int sum = 0, smin = 0;
+    // unordered_map<int, int> dp;
+    vector<int> dp(2 * sum + 1);
+    dp[sum] = 1;
     ll ans = 0;
     for (int i = 0; i < n; i++) {
         sum += a[i];
-        smin = min(smin, sum);
-        for (int j = 0; sum - j * j >= smin; j++) {
+        for (int j = 0; sum - j * j >= 0; j++) {
             ans += dp[sum - j * j];
         }
         dp[sum]++;

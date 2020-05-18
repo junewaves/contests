@@ -6,8 +6,11 @@ void solve() {
     int r, c;
     cin >> r >> c;
     unordered_map<char, pair<int, unordered_set<char>>> graph;
+    // map<char, pair<int, set<char>>> graph;
     string s1, s2;
     cin >> s1;
+    for (char a : s1)
+        graph[a].first = 0;
     for (int i = 1; i < r; i++) {
         cin >> s2;
         for (int j = 0; j < c; j++) {
