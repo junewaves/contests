@@ -7,7 +7,7 @@ int main() {
     cin.tie(0);
     int n, m;
     cin >> n;
-    vector<int> mo(n), pl(n + 1, 0);
+    vector<int> mo(n + 1), pl(n + 1);
     for (int i = 0; i < n; i++)
         cin >> mo[i];  // i-th monster's power
     cin >> m;
