@@ -1,70 +1,59 @@
 #include <bits/stdc++.h>
 using namespace std;
-#ifndef _VSCODE_DEBUG
-#define endl '\n'
-#endif
-struct Node {
-    int parent, depth;
-    unordered_set<int> children;
-};
-int n, q, p, c;
-// Node nodes[200005];
-vector<Node> nodes;
-void construct_tree() {
-    for (int i = 1; i < n; i++) {
-        cin >> p >> c;
-        nodes[p].children.insert(c);
-        nodes[c].children.insert(p);
+
+int global_time;
+vector<int> p, d, tin, tout;
+vector<vector<int>> a;
+
+void dfs(int u = 0, int parent = -1, int depth = 0) {
+    p[u] = parent;
+    d[u] = depth;
+    tin[u] = global_time++;
+    for (int v : a[u]) {
+        if (parent != v)
+            dfs(v, u, depth + 1);
     }
-    nodes[1].parent = 0;
-    nodes[1].depth = 0;
-    for (auto v : nodes[1].children) {
-        nodes[v].parent = 1;
-        nodes[v].depth = 2;
-    }
-    for (int i = 2; i <= n; i++) {
-        nodes[i].children.erase(nodes[i].parent);
-        for (auto v : nodes[i].children) {
-            nodes[v].parent = i;
-            nodes[v].depth = nodes[i].depth + 1;
-        }
-    }
+    tout[u] = global_time++;
 }
+
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
+    int n, q;
     cin >> n >> q;
-    nodes.resize(n + 1);
-    construct_tree();
-    // start queries
-    for (int i = 0; i < q; i++) {
-        cin >> p;
-        vector<int> query(p);
-        for (int j = 0; j < p; j++) {
-            cin >> query[j];
-        }
-        sort(query.begin(), query.end(),
-             [](int x, int y) { return nodes[x].depth > nodes[y].depth; });
-        // for (int q : query) {
-        //     cout << q << ", ";
-        // }
-        unordered_set<int> goodNodes = { 1 };
-        int ptr = query[0];
-        while (ptr > 1) {
-            ptr = nodes[ptr].parent;
-            goodNodes.insert(nodes[ptr].children.begin(),
-                             nodes[ptr].children.end());
-        }
-        bool query_success = true;
-        for (int j = 0; j < p; j++) {
-            if (goodNodes.count(query[j]) == 0) {
-                query_success = false;
-                break;
+    p = d = tin = tout = vector<int>(n);
+    a = vector<vector<int>>(n);
+    for (int i = 1, x, y; i < n; i++) {
+        cin >> x >> y;
+        x--, y--;
+        a[x].push_back(y);
+        a[y].push_back(x);
+    }
+    global_time = 0;
+    dfs();
+    for (int i = 0, m; i < q; i++) {
+        cin >> m;
+        vector<int> que(m);
+        int fv = 0, mxd = 0;
+        for (int& it : que) {
+            cin >> it;
+            --it;
+            if (d[it] > mxd) {
+                mxd = d[it];
+                fv = it;
             }
         }
-        if (query_success)
-            cout << "YES\n";
-        else
-            cout << "NO\n";
+        for (int& it : que) {
+            if (it != fv && it != 0) {
+                it = p[it];
+            }
+        }
+        bool ok = true;
+        for (int j = 0; j < m && ok; j++) {
+            if (tin[que[j]] > tin[fv] || tout[fv] > tout[que[j]]) {
+                ok = false;
+            }
+        }
+        cout << (ok ? "YES" : "NO") << '\n';
     }
 }
