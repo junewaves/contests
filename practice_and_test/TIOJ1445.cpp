@@ -1,12 +1,16 @@
 #include <bits/stdc++.h>
 using namespace std;
+typedef long long ll;
 
-struct edge {
-    int u, v, w;
+struct Edge {
+    ll w;
+    int u, v, id;
+    bool operator<(const Edge& o) const { return w < o.w; };
+    Edge(int a, int b, ll c, int d) : w(c), u(a), v(b), id(d) {}
 };
 
-int n, m = 0, _m;
-vector<int> group;
+// vector<int> group;
+int group[1001];
 
 int Find(int u) {
     if (group[u] == u)
@@ -21,95 +25,52 @@ void Union(int u, int v) {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    cin >> n >> _m;
-    vector<edge> e(_m);
-    group = vector<int>(n);
-    vector<vector<pair<int, int>>> adj_full(n);
-    for (int i = 0; i < n; i++)
-        group[i] = i;
-    for (int i = 0, u, v, w; i < _m; i++) {
+    int n, m;
+    cin >> n >> m;
+    vector<Edge> e;
+    // group = vector<int>(n);
+    for (int j = 0; j <= n; j++)
+        group[j] = j;
+    ll w;
+    for (int i = 0, u, v; i < m; i++) {
         cin >> u >> v >> w;
-        if (u != v) {
-            e[m].u = --u;
-            e[m].v = --v;
-            e[m].w = w;
-            ++m;
-            adj_full[u].emplace_back(v, w);
-            adj_full[v].emplace_back(u, w);
-        }
+        e.emplace_back(u, v, w, i);
     }
-    if (!m) {
-        cout << "-1 -1\n";
-        return 0;
-    }
-    e.resize(m);
-    sort(e.begin(), e.end(),
-         [](const edge& x, const edge& y) { return x.w < y.w; });
-    vector<edge> used;
-    vector<vector<pair<int, int>>> adj(n);
+    sort(e.begin(), e.end());
+    vector<int> used;
     int con = 0;
-    long long w_min = 0, w_alt = 0x3f3f3f3f;
-    for (int i = 0; i < m; i++) {
+    ll w_min = 0;
+    for (int i = 0; i < m && con < n - 1; i++) {
         if (Find(e[i].u) != Find(e[i].v)) {
-            Union(e[i].u, e[i].v);
             w_min += e[i].w;
-            used.push_back(e[i]);
+            Union(e[i].u, e[i].v);
+            used.push_back(e[i].id);
             ++con;
-            adj[e[i].u].emplace_back(e[i].v, e[i].w);
-            adj[e[i].v].emplace_back(e[i].u, e[i].w);
         }
     }
     if (con != n - 1) {
-        cout << "-1 -1\n";
-        return 0;
-    } else if (con == m) {
-        cout << w_min << " -1\n";
+        puts("-1 -1");
         return 0;
     }
-    /*
-    function<int(int, int, int)> dfs = [&](int u, int p, int t) {
-        int ans = -1, v, w;
-        for (const auto& pp : adj[u]) {
-            tie(v, w) = pp;
-            if (v == p)
+    bool ok = false;
+    ll w_alt = LLONG_MAX;
+    for (int ignore_id : used) {
+        con = 0;
+        ll res = 0;
+        for (int j = 0; j <= n; j++)
+            group[j] = j;
+        for (int i = 0; i < m && con < n - 1; i++) {
+            if (e[i].id == ignore_id || Find(e[i].u) == Find(e[i].v))
                 continue;
-            if (v == t)
-                return w;
-            int ret = dfs(v, u, t);
-            if (ret != -1) {
-                ans = max(w, ret);
-            }
+            Union(e[i].u, e[i].v);
+            res += e[i].w;
+            ++con;
         }
-        return ans;
-    };*/
-    function<void(int, int, int)> dfs2 = [&](int u, int g, int be) {
-        group[u] = g;
-        for (const auto& v : adj[u]) {
-            if (!group[v.first] && v.first != be) {
-                dfs2(v.first, g, be);
-            }
+        if (con == n - 1) {
+            ok = true;
+            w_alt = min(w_alt, res);
         }
-    };
-    // n * n
-    for (const edge& E : used) {
-        for (int i = 0; i < n; i++)
-            group[i] = 0;
-        int u = E.u, v = E.v;
-        dfs2(u, 1, v);
-        dfs2(v, 2, u);
-        int w = 0x3f3f3f3f;
-        for (const auto& pp : adj_full[u]) {
-            if (group[u] != group[pp.first] && v != pp.first) {
-                w = min(w, pp.second);
-            }
-        }
-        for (const auto& pp : adj_full[v]) {
-            if (group[v] != group[pp.first] && u != pp.first) {
-                w = min(w, pp.second);
-            }
-        }
-        w_alt = min(w_alt, w_min + w - E.w);
     }
-    cout << w_min << " " << w_alt << '\n';
+    cout << w_min << " " << (ok ? w_alt : -1) << '\n';
     return 0;
 }

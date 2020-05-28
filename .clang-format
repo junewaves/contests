@@ -8,10 +8,10 @@ AccessModifierOffset: -4
 IndentCaseLabels: false
 AlignConsecutiveAssignments: false
 AlignTrailingComments: false
-AllowShortBlocksOnASingleLine: false
+AllowShortBlocksOnASingleLine: true
 AllowShortLoopsOnASingleLine: false
 AllowShortFunctionsOnASingleLine: Inline
-AllowShortIfStatementsOnASingleLine: false
+AllowShortIfStatementsOnASingleLine: Never
 AlwaysBreakAfterReturnType: None
 AlwaysBreakTemplateDeclarations: true
 BreakBeforeBraces: Custom
