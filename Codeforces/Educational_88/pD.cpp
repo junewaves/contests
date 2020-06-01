@@ -8,24 +8,17 @@ void solve() {
     vector<int> a(n);
     for (int& it : a)
         cin >> it;
-    int ans = 0, mx = 0, sum = 0;
-    for (int i = 0; i < n; i++) {
-        mx = max(mx, a[i]);
-        sum += a[i];
-        ans = max(ans, sum - mx);
-        if (sum < 0) {
-            sum = 0;
-            mx = max(0, a[i]);
-        }
-    }
-    sum = 0, mx = 0;
-    for (int i = 0; i < n; i++) {
-        mx = max(mx, a[i]);
-        sum += a[i];
-        ans = max(ans, sum - mx);
-        if (sum - mx < 0) {
-            sum = 0;
-            mx = max(0, a[i]);
+    int ans = 0;
+    for (int mx = 1; mx <= 30; mx++) {
+        int sum = 0;
+        for (int i = 0; i < n; i++) {
+            if (a[i] > mx) {
+                sum = 0;
+            } else {
+                sum += a[i];
+            }
+            sum = max(sum, 0);
+            ans = max(ans, sum - mx);
         }
     }
     cout << ans << '\n';
