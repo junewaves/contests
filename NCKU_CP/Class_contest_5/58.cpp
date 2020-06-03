@@ -2,15 +2,13 @@
 using namespace std;
 typedef long long ll;
 struct edge {
-    int u;
-    int v;
-    int c;
+    int u, v, c;
 };
 vector<int> group;
 int Find(int u) {
     if (u == group[u])
         return u;
-    return Find(group[u]);
+    return group[u] = Find(group[u]);
 }
 void Union(int u, int v) {
     int gu = Find(u), gv = Find(v);
