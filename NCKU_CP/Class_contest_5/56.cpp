@@ -10,20 +10,14 @@ int main() {
         cout << "No\n";
         return 0;
     }
-    int a, b;
-    if (n & 1) {
-        a = n / 2 + 1;
-        b = n / 2;
-    } else {
-        a = b = n / 2;
-    }
+    int a = n / 2 + (n & 1), b = n / 2;
     cout << "Yes\n";
     cout << a << " " << b << '\n';
     for (int i = 0, j = 1; i < a; i++, j += 2)
-        cout << j << " ";
+        cout << j << ' ';
     cout << '\n';
     for (int i = 0, j = 2; i < b; i++, j += 2)
-        cout << j << " ";
+        cout << j << ' ';
     cout << '\n';
     return 0;
 }
