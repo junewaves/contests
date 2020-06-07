@@ -7,9 +7,8 @@ void solve() {
     vector<int> a(n), b(n), c(n), d(n);
     for (int& va : a)
         cin >> va, va--;
-    for (int& vb : b) {
+    for (int& vb : b)
         cin >> vb, vb--;
-    }
     for (int i = 0; i < n; i++) {
         c[a[i]] = i;
         d[b[i]] = i;

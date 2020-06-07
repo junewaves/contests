@@ -2,25 +2,20 @@
 using namespace std;
 typedef long long ll;
 void solve() {
-    int n;
+    int n, cnt = 0;
     cin >> n;
     vector<int> a(n), b(n);
-    vector<bool> test = { 0, 0 };
-
     for (int& va : a)
         cin >> va;
-    for (int& vb : b) {
-        cin >> vb;
-        test[vb] = 1;
-    }
-    if (test[0] && test[1]) {
+    for (int& vb : b)
+        cin >> vb, cnt += vb;
+    if (0 < cnt && cnt < n) {
         cout << "Yes\n";
         return;
     }
-    int p = a[0];
     bool ok = true;
-    for (int i = 0; i < n; i++) {
-        if (a[i] < p) {
+    for (int i = 1; i < n; i++) {
+        if (a[i - 1] > a[i]) {
             ok = false;
             break;
         }
