@@ -1,21 +1,28 @@
 #include <bits/stdc++.h>
 using namespace std;
 typedef long long ll;
+// this is TLE
 void solve() {
     int n;
     cin >> n;
-    vector<int> a(n), b(n, -1), c(n, -1);
-    for (int& v : a)
-        cin >> v;
-    for (int j = 0; j < n; ++j) {
-        for (int i = 2; (ll)i * i <= a[j]; i++) {
-            if (a[j] % i == 0) {
-                if (__gcd(i + a[j] / i, a[j]) == 1) {
-                    b[j] = i;
-                    c[j] = a[j] / i;
-                    break;
-                }
-            }
+    vector<int> b(n, -1), c(n, -1);
+    for (int j = 0, a; j < n; ++j) {
+        cin >> a;
+        vector<int> f;
+        for (int i = 2; (ll)i * i <= a; i++) {
+            int t = 0;
+            while (a % i == 0)
+                a /= i, t++;
+            if (t)
+                f.push_back(i);
+        }
+        if (a != 1)
+            f.push_back(a);
+        if (f.size() >= 2) {
+            b[j] = f[0];
+            c[j] = 1;
+            for (int i = 1; i < (int)f.size(); ++i)
+                c[j] *= f[i];
         }
     }
     for (int i : b)
