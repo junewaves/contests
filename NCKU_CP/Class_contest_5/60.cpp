@@ -4,26 +4,22 @@ typedef long long ll;
 vector<vector<int>> a, an;
 vector<int> dep;
 void dfs(int u, int p, int d) {
-    // if (dep[u] != -1)
-    //     return;
     dep[u] = d;
     for (int v : a[u]) {
-        if (v != p) {
-            an[v][0] = u;
-            for (int i = 1; i <= log2(d + 1); i++) {
-                if (an[v][i - 1] != -1)
-                    an[v][i] = an[an[v][i - 1]][i - 1];
-            }
-            dfs(v, u, d + 1);
+        if (v == p) continue;
+        an[v][0] = u;
+        for (int i = 1; i <= log2(d + 1); i++) {
+            if (an[v][i - 1] != -1)
+                an[v][i] = an[an[v][i - 1]][i - 1];
         }
+        dfs(v, u, d + 1);
     }
 }
 int LCA(int u, int v) {
     if (dep[u] < dep[v])
         swap(u, v);
     while (dep[u] != dep[v]) {
-        int i = log2(dep[u] - dep[v]);
-        u = an[u][i];
+        u = an[u][log2(dep[u] - dep[v])];
     }
     if (u == v)
         return u;
@@ -36,11 +32,9 @@ int LCA(int u, int v) {
 int main() {
     ios::sync_with_stdio(false);
     cin.tie(0);
-    int n, m, u, v, d = 1;
+    int n, m, u, v, d;
     cin >> n >> m;
-    for (int i = n; i; i /= 2) {
-        d++;
-    }
+    d = log2(n);
     a = vector<vector<int>>(n);
     an = vector<vector<int>>(n, vector<int>(d, -1));
     dep = vector<int>(n, -1);
@@ -54,10 +48,5 @@ int main() {
         cin >> u >> v;
         cout << LCA(u, v) << '\n';
     }
-    // for (auto b : an) {
-    //     for (int c : b)
-    //         cout << c << " ";
-    //     cout << endl;
-    // }
     return 0;
 }

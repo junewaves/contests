@@ -3,7 +3,7 @@ using namespace std;
 typedef long long ll;
 
 struct Edge {
-    ll u, v, w;
+    int u, v, w;
 };
 
 int main() {
@@ -12,7 +12,7 @@ int main() {
     ll n, m;
     cin >> n >> m;
     vector<Edge> E(m);
-    vector<ll> s(n, 1e18);
+    vector<int> s(n, 0x3f3f3f3f);
     s[0] = 0;
     for (Edge& e : E) {
         cin >> e.u >> e.v >> e.w;
