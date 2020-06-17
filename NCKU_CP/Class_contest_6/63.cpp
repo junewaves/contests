@@ -1,6 +1,5 @@
 #include <bits/stdc++.h>
 using namespace std;
-#define endl '\n'
 typedef long long ll;
 int main() {
     ios::sync_with_stdio(false);
@@ -9,17 +8,17 @@ int main() {
     cin >> a >> b >> c;
     ll g = gcd(a, b);
     if (c % g) {
-        cout << "N" << endl;
+        cout << "N\n";
     } else {
-        a = a / g, b = b / g, c = c / g;
-        ll x = 0, t = c;
+        a /= g, b /= g, c /= g;
+        ll x = 0;
         for (;; x++) {
-            if (t % b == 0) {
-                cout << "Y" << endl;
-                cout << x << " " << t / b << endl;
+            if (c % b == 0) {
+                cout << "Y\n";
+                cout << x << " " << c / b << "\n";
                 break;
             }
-            t -= a;
+            c -= a;
         }
     }
     return 0;
