@@ -7,7 +7,6 @@ void solve() {
     cin >> n >> m >> k;
     if (n > m)
         swap(n, m);
-    ll ans = 1000;
     for (int i = 0; i < 45; i++) {
         if (f[i + 1] * m + f[i] * n > k) {
             cout << i << endl;
