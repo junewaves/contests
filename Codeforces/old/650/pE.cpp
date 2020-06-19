@@ -10,10 +10,41 @@ void solve() {
         cin >> c;
         s[c - 'a']++;
     }
-    sort(s.begin(), s.end(), greater<int>());
-    for (int cc : s)
-        cout << cc << ' ';
-    cout << '\n';
+    for (int len = n; len > 0; len--) {
+        vector<bool> used(len);
+        vector<int> cycle;
+        for (int i = 0; i < len; i++) {
+            if (used[i])
+                continue;
+            used[i] = true;
+            cycle.push_back(0);
+            cycle.back()++;
+            int j = (i + k) % len;
+            while (!used[j]) {
+                cycle.back()++;
+                used[j] = true;
+                j = (j + k) % len;
+            }
+        }
+        sort(cycle.begin(), cycle.end());
+        priority_queue<int> cur(s.begin(), s.end());
+        bool ok = true;
+        while (!cycle.empty()) {
+            if (cur.top() < cycle.back()) {
+                ok = false;
+                break;
+            } else {
+                int x = cur.top();
+                cur.pop();
+                cur.push(x - cycle.back());
+                cycle.pop_back();
+            }
+        }
+        if (ok) {
+            cout << len << '\n';
+            return;
+        }
+    }
 }
 int main() {
     ios::sync_with_stdio(false);
