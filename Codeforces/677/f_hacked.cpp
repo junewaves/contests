@@ -59,6 +59,6 @@ int main() {
         }
         dp[row] = ndp;
     }
-    cout << ndp[0];
+    cout << ndp[0]; // got hacked :((
     return 0;
 }
