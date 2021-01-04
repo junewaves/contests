@@ -21,8 +21,8 @@ int main() {
         for (int i = 0; i < n; i++) {
             auto it = seen.upper_bound(array<int, 2>{a[i][1], -1});
             if (it != seen.begin())
-                ans[a[i][2]] = (*--it)[1] + 1;
-            seen.insert({a[i][1], a[i][2]});
+                ans[a[i][2]] = (*--it)[1];
+            seen.insert({a[i][1], a[i][2] + 1});
         }
         auto b = a;
         sort(a.begin(), a.end(), [](const auto& x, const auto& y){
@@ -30,14 +30,14 @@ int main() {
         });
         seen.clear();
         for (int i = 0, j = 0; i < n; i++) {
+            if (ans[b[i][2]] != -1) continue;
             while (j < n && a[j][1] < b[i][0]) {
-                seen.insert({a[j][0], a[j][2]});
+                seen.insert({a[j][0], a[j][2] + 1});
                 j++;
             }
-            if (ans[b[i][2]] != -1) continue;
             auto it = seen.upper_bound(array<int, 2>{b[i][1], -1});
             if (it != seen.begin())
-                ans[b[i][2]] = (*--it)[1] + 1;
+                ans[b[i][2]] = (*--it)[1];
         }
         for (int &it : ans)
             cout << it << ' ';
